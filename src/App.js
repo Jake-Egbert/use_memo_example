@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { createTodos } from "./utils.js";
+import TodoList from "./TodoList.js";
+import "./styles/app.scss";
 
-function App() {
+const todos = createTodos();
+
+export default function App() {
+  const [tab, setTab] = useState("all");
+  const [isDark, setIsDark] = useState(false);
+  console.log("app js reloading");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <button onClick={() => setTab("all")}>All</button>
+      <button onClick={() => setTab("active")}>Active</button>
+      <button onClick={() => setTab("completed")}>Completed</button>
+      <br />
+      <label>
+        <input
+          type="checkbox"
+          checked={isDark}
+          onChange={(e) => setIsDark(e.target.checked)}
+        />
+        Dark mode
+      </label>
+      <hr />
+      <TodoList todos={todos} tab={tab} theme={isDark ? "dark" : "light"} />
+    </>
   );
 }
-
-export default App;
